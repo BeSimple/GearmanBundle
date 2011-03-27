@@ -19,7 +19,7 @@
             </call>
         </service>
 
-        <service id="besimple.gearman.worker" class="%besimple.gearman.worker.class%">
+        <service id="besimple.gearman.worker" class="%besimple.gearman.worker.class%" abstract="true">
             <call method="addServers">
                 <argument>%besimple.gearman.servers.worker%</argument>
             </call>
@@ -31,7 +31,5 @@
         </service>
 
         <service id="gearman_client" alias="besimple.gearman.client" />
-
-        <service id="gearman_worker" alias="besimple.gearman.worker" />
     </services>
 </container>
