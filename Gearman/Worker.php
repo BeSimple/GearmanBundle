@@ -19,17 +19,22 @@ abstract class Worker extends \GearmanWorker implements WorkerInterface
 
             @$this->work();
 
-            switch ($this->returnCode()) {
-                case \GEARMAN_TIMEOUT:
-                        throw new TimeoutException(sprintf('Worker error "%s" (code: %d)', $this->error(), $this->returnCode()));
-                    break;
-
-                case \GEARMAN_SUCCESS:
-                    break;
-
-                default:
-                    throw new WorkerException(sprintf('Worker error "%s" (code: %d)', $this->error(), $this->returnCode()));
-            }
+            $this->checkReturn();
         } while (!$maxIteration || $i < $maxIteration);
+    }
+
+    public function checkReturn()
+    {
+        switch ($this->returnCode()) {
+            case \GEARMAN_TIMEOUT:
+                    throw new TimeoutException(sprintf('Worker error "%s" (code: %d)', $this->error(), $this->returnCode()));
+                break;
+
+            case \GEARMAN_SUCCESS:
+                break;
+
+            default:
+                throw new WorkerException(sprintf('Worker error "%s" (code: %d)', $this->error(), $this->returnCode()));
+        }
     }
 }
