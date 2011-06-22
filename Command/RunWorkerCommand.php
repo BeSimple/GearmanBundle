@@ -2,7 +2,7 @@
 
 namespace BeSimple\GearmanBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Francis Besset <francis.besset@gmail.com>
  */
-class RunWorkerCommand extends Command
+class RunWorkerCommand extends ContainerAwareCommand
 {
     /**
      * @see Command
@@ -37,7 +37,7 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $worker = $this->container->get($input->getArgument('worker'));
+        $worker = $this->getContainer()->get($input->getArgument('worker'));
         $worker->execute();
     }
 }
